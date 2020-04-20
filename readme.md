@@ -53,17 +53,85 @@ log        |    90d     |   logs que auditam as rotinas como envio de estoque, s
 Funções disponíveis no SDK:
 ------------------------------------
 Nome            |   Desc            |   Exemplo
-setLevel        |   tipo de log     |   history / log
-setApp          |   aplicação       |   vendala / simplifique / lambdared / pickingpack / questions
+setKey          |   set access key  |   ASDASDASDASD
+setSecret       |   set secret key  |   DSADHASUDHAU
+setWellExecuted |   sucesso na exec |   true | false
+setLevel        |   tipo de log     |   history | log
+setEnvironment  |   tipo de env     |   local | dev | prod
+setApp          |   aplicação       |   vendala | simplifique | lambdared | pickingpack | questions
 setUid          |   coluna ref      |   universal_id (primary key)
 setTable        |   tabela logada   |   skus
 setDatabase     |   db logado       |   vendala2020
-setPayload      |   json logado     |   { "foo" : "bar" }
+addMessage      |   adiciona msgs   |   "passou aqui 123"
+addException    |   adiciona excep  |   throw new Exception('EXCP')
+addProp         |   adiciona props  |   $prop1 = []; $prop2 = stdClass;
+addMethod       |   adiciona funcs  |   func1(); func2(); func3();
 sendLog         |   função de envio |   envia o log ao kinesis
-
-
 ------------------------------------
 
 Padrão de nomenclatura:
 lowerCamelCase
+```
+
+Testes disponíveis:
+
+```
+Em construção
+( testes unitários e de integração )
+```
+
+Exemplo de json salvo no elasticsearch:
+
+```javascript
+{
+  "messages": [
+    "começou a execução do processo de estoque",
+    "estoque antigo: 123",
+    "cliente alterou estoque para: 122"
+  ],
+  "methods": {
+    "splitEstoque();": {
+      "arguments": {
+        "sku_id": 123,
+        "old": 1,
+        "new": 2
+      },
+      "logs": {
+        "maoe": "vempraca",
+        "asdfadf": "ggdfgfdg"
+      }
+    },
+    "auditEstoque();": {
+      "arguments": {
+        "teste": "testado"
+      },
+      "logs": {
+        "mas testou mesmo?": "sim"
+      }
+    },
+    "blablabla();": {
+      "arguments": {
+        "foo": "bar"
+      },
+      "logs": [
+        "passou por aqui"
+      ]
+    }
+  },
+  "props": {
+    "sku_id": "123123",
+    "sku": "TESTESDK",
+    "shop_name": "testeantonio",
+    "enterprise_id": 1,
+    "old": "123",
+    "new": "122"
+  },
+  "level": "log",
+  "env": "local",
+  "app": "simplifique",
+  "uid": "3333",
+  "table": "skus",
+  "database": "simplifique",
+  "wellExecuted": true
+}
 ```

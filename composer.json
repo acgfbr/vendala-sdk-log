@@ -1,16 +1,18 @@
 {
-    "name": "antonioguimaraes/vendala-sdk-log",
-    "description": "SDK do micro serviço de logs",
-    "authors": [
-        {
-            "name": "Antonio Guimaraes",
-            "email": "acgfbr@gmail.com"
-        }
-    ],
-    "require": {},
-    "autoload": {
-        "psr-4": {
-            "Vendala\\SDKLog\\": "src"
-        }
+  "name": "antonioguimaraes/vendala-sdk-log-php",
+  "description": "SDK em php do micro serviço de logs",
+  "authors": [
+    {
+      "name": "Antonio Guimaraes",
+      "email": "acgfbr@gmail.com"
     }
+  ],
+  "require": {
+    "aws/aws-sdk-php": "^3.135"
+  },
+  "autoload": {
+    "psr-4": {
+      "Vendala\\Logs\\": "src"
+    }
+  }
 }
