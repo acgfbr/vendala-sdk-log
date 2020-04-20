@@ -4,7 +4,7 @@
 
 Este pacote visa padronizar o envio para o micro serviço de logs.
 
-`Instalação``
+`Instalação`
 
 Para instalar este pacote no projeto utilize o comando:
 ```
