@@ -1,6 +1,6 @@
 <?php
 
-namespace ErikFig;
+namespace Vendala\SDKLog;
 
 class HelloWorld
 {

@@ -1,0 +1,16 @@
+{
+    "name": "antonioguimaraes/vendala-sdk-log",
+    "description": "SDK do micro serviço de logs",
+    "authors": [
+        {
+            "name": "Antonio Guimaraes",
+            "email": "acgfbr@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Vendala\\SDKLog\\": "src"
+        }
+    }
+}
