@@ -4,9 +4,11 @@
   "authors": [
     {
       "name": "Antonio Guimaraes",
-      "email": "acgfbr@gmail.com"
+      "email": "antonio@vendala.com.br",
+      "role": "Senior Software Engineer"
     }
   ],
+  "license": "MIT",
   "require": {
     "aws/aws-sdk-php": "^3.135"
   },
