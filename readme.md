@@ -4,11 +4,12 @@
 
 Este pacote visa padronizar o envio para o micro serviço de logs.
 
-
 `Documentação`
+
 ## ![image info](mslog.png)
 
 Explicando:
+
 ```
 Nossos sistemas precisam guardar logs diariamente.
 Como não temos um lugar centralizado, este projeto visa centralizar e guardar tudo.
@@ -35,6 +36,7 @@ Lifecycle de consumo resumido:
 ```
 
 Observações:
+
 ```
 Existem dois tipos de log level:
 
@@ -50,9 +52,16 @@ log        |    90d     |   logs que auditam as rotinas como envio de estoque, s
 
 Funções disponíveis no SDK:
 ------------------------------------
-Nome            |    Desc
-history     |    n/a
-log        |    90d
+Nome            |    Desc           |   Exemplo
+setLevel        |    tipo de log    |   history / log
+setApp          |    aplicação      |   vendala / simplifique / lambdared / pickingpack / questions
+setUid          |   coluna ref      |   universal_id (primary key)
+setTable        |   tabela logada   |   skus
+setDatabase     |   db logado       |   vendala2020
+setPayload      |   json logado     |   { "foo" : "bar" }
+sendLog         |   função de envio |   envia o log ao kinesis
+
+
 ------------------------------------
 
 Padrão de nomenclatura:
