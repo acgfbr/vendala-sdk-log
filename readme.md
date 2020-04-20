@@ -52,9 +52,9 @@ log        |    90d     |   logs que auditam as rotinas como envio de estoque, s
 
 Funções disponíveis no SDK:
 ------------------------------------
-Nome            |    Desc           |   Exemplo
-setLevel        |    tipo de log    |   history / log
-setApp          |    aplicação      |   vendala / simplifique / lambdared / pickingpack / questions
+Nome            |   Desc            |   Exemplo
+setLevel        |   tipo de log     |   history / log
+setApp          |   aplicação       |   vendala / simplifique / lambdared / pickingpack / questions
 setUid          |   coluna ref      |   universal_id (primary key)
 setTable        |   tabela logada   |   skus
 setDatabase     |   db logado       |   vendala2020
