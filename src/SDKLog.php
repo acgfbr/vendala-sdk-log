@@ -246,7 +246,7 @@ final class SDKLog implements SDKLogInterface
             );
 
             $firehoseClient->putRecord([
-                'DeliveryStreamName' => "vendala-logs",
+                'DeliveryStreamName' => $this->level == "log" ? "vendala-logs" : "vendala-history",
                 'Record' => [
                     'Data' => json_encode($this->payload),
                 ],
