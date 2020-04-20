@@ -4,6 +4,15 @@
 
 Este pacote visa padronizar o envio para o micro serviço de logs.
 
+`Instalação``
+
+Para instalar este pacote no projeto utilize o comando:
+```
+composer require antonioguimaraes/vendala-sdk-log
+```
+
+Feito isto, basta adicionar o uso da classe que você já terá acesso a todo poder do sdk.
+
 `Documentação`
 
 ## ![image info](mslog.png)
