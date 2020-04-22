@@ -25,13 +25,13 @@ final class SDKLog implements SDKLogInterface
      * access key da aws
      * @var string
      */
-    protected $key;
+    private $key;
 
     /**
      * secret key da aws
      * @var string
      */
-    protected $secret;
+    private $secret;
 
     /**
      * versão da api da aws
