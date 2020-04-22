@@ -268,13 +268,8 @@ final class SDKLog implements SDKLogInterface
                 ]
             );
 
-            $environment = $this->payload->env;
-            if ($environment != 'production') {
-                $environment = 'stage';
-            }
-
             $firehoseClient->putRecord([
-                'DeliveryStreamName' => $this->streamName[$this->level] . '-' . $environment,
+                'DeliveryStreamName' => $this->streamName[$this->level],
                 'Record' => [
                     'Data' => json_encode($this->payload),
                 ],
