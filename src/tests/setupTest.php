@@ -73,6 +73,7 @@ class SetupTest extends TestCase
         $log->setWellExecuted(false);
 
         $this->expectException(Exception::class);
+        $this->expectExceptionMessage('aws access key not configured');
 
         $log->sendLog();
     }

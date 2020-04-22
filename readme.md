@@ -18,7 +18,7 @@ Feito isto, basta adicionar o uso da classe que você já terá acesso a todo po
 
 ## ![image info](mslog.png)
 
-Explicando:
+`Explicando`
 
 ```
 Nossos sistemas precisam guardar logs diariamente.
@@ -45,7 +45,7 @@ Lifecycle de consumo resumido:
 5 - fim do ciclo de vida.
 ```
 
-Observações:
+`Observações`
 
 ```
 Existem dois tipos de log level:
@@ -83,7 +83,7 @@ Padrão de nomenclatura:
 lowerCamelCase.
 ```
 
-Testes disponíveis:
+`Testes disponíveis`
 
 ```
 1 - teste que valida o fluxo completo
@@ -93,7 +93,7 @@ Para rodar os testes utilize:
 vendor/bin/phpunit src/tests/setupTest.php
 ```
 
-Exemplo de json salvo no elasticsearch:
+`Exemplo de json salvo no elasticsearch`
 
 ```javascript
 {
