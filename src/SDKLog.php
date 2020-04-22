@@ -10,6 +10,12 @@ use Throwable;
 final class SDKLog implements SDKLogInterface
 {
     /**
+     * nome da stream no kinesis firehose
+     * @var array
+     */
+    private $streamName = ['log' => 'vendala-logs', 'history' => 'vendala-history'];
+
+    /**
      * determina se está mockado ou não para testes
      * @var boolean
      */
@@ -19,13 +25,13 @@ final class SDKLog implements SDKLogInterface
      * access key da aws
      * @var string
      */
-    private $key;
+    protected $key;
 
     /**
      * secret key da aws
      * @var string
      */
-    private $secret;
+    protected $secret;
 
     /**
      * versão da api da aws
@@ -75,7 +81,7 @@ final class SDKLog implements SDKLogInterface
      */
     public function setSecret($secret): void
     {
-        $this->key = $secret;
+        $this->secret = $secret;
     }
 
     /**
@@ -221,15 +227,32 @@ final class SDKLog implements SDKLogInterface
     }
 
     /**
+     * Valida os dados mínimos pra enviar ao firehose
+     * @param object $k
+     * @param string $st
+     * @return $this
+     */
+    public function validateSendLog($k, $st): void
+    {
+        if (!isset($k)) {
+            throw new Exception($st . ' not configured.');
+        }
+    }
+    /**
      * Envia ao firehose os dados pré inseridos
      * @return void
      */
-    public function sendLog(): void
+    public function sendLog(): bool
     {
+        $this->validateSendLog($this->key, 'aws access key');
+        $this->validateSendLog($this->secret, 'aws secret key');
+        $this->validateSendLog($this->payload->env, 'env');
+        $this->validateSendLog($this->payload->level, 'level');
+
         // se estiver mockado não envia pra aws
         if ($this->mocked) {
-            print_r(json_encode($this->payload));
-            return;
+            #print_r(json_encode($this->payload));
+            return true;
         }
 
         try {
@@ -245,13 +268,22 @@ final class SDKLog implements SDKLogInterface
                 ]
             );
 
+            $environment = $this->payload->env;
+            if ($environment != 'production') {
+                $environment = 'stage';
+            }
+
             $firehoseClient->putRecord([
-                'DeliveryStreamName' => $this->level == "log" ? "vendala-logs" : "vendala-history",
+                'DeliveryStreamName' => $this->streamName[$this->level] . '-' . $environment,
                 'Record' => [
                     'Data' => json_encode($this->payload),
                 ],
             ]);
-        } catch (Throwable $ex) {
+            return true;
+        } catch (Exception $ex) {
+            print_r($ex->getTraceAsString());
         }
+
+        return false;
     }
 }

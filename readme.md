@@ -86,8 +86,11 @@ lowerCamelCase.
 Testes disponíveis:
 
 ```
-Em construção.
-( testes unitários e de integração ).
+1 - teste que valida o fluxo completo
+2 - teste que valida informações mínimas obrigatórias
+
+Para rodar os testes utilize:
+vendor/bin/phpunit src/tests/setupTest.php
 ```
 
 Exemplo de json salvo no elasticsearch:

@@ -101,8 +101,16 @@ interface SDKLogInterface
     public function addMethod($name, $arguments = [], $logs = []): SDKLog;
 
     /**
+     * Valida os dados mínimos pra enviar ao firehose
+     * @param object $k
+     * @param string $st
+     * @return $this
+     */
+    public function validateSendLog($k, $st): void;
+
+    /**
      * Envia ao firehose os dados pré inseridos
      * @return void
      */
-    public function sendLog(): void;
+    public function sendLog(): bool;
 }
