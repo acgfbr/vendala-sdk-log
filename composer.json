@@ -10,7 +10,7 @@
   ],
   "license": "MIT",
   "require": {
-    "aws/aws-sdk-php": "^3.135"
+    "aws/aws-sdk-php": "^3.134"
   },
   "autoload": {
     "psr-4": {
