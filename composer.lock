@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f6f8dc098dc9d120e5204af98a8dcf4e",
+    "content-hash": "bec44e280fad11899d7cae4d8fca58ef",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.135.0",
+            "version": "3.134.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "254f168f90b1846ffb3f70594280e66b9f10a85e"
+                "reference": "480d4df4b7974666fa7c5e3df564d01f4f29663f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/254f168f90b1846ffb3f70594280e66b9f10a85e",
-                "reference": "254f168f90b1846ffb3f70594280e66b9f10a85e",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/480d4df4b7974666fa7c5e3df564d01f4f29663f",
+                "reference": "480d4df4b7974666fa7c5e3df564d01f4f29663f",
                 "shasum": ""
             },
             "require": {
@@ -88,7 +88,7 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2020-04-20T18:16:34+00:00"
+            "time": "2020-03-31T18:12:13+00:00"
         },
         {
             "name": "guzzlehttp/guzzle",
