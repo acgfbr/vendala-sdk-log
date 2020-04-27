@@ -98,7 +98,6 @@ vendor/bin/phpunit src/tests/setupTest.php
 
 ```javascript
 {
-  "logType" : "stock_change",
   "messages": [
     "começou a execução do processo de estoque",
     "estoque antigo: 123",
@@ -141,6 +140,7 @@ vendor/bin/phpunit src/tests/setupTest.php
     "old": "123",
     "new": "122"
   },
+  "logType" : "stock_change",
   "level": "log",
   "env": "local",
   "app": "simplifique",
