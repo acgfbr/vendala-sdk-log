@@ -63,10 +63,11 @@ log        |    90d     |   logs que auditam as rotinas como envio de estoque, s
 Funções disponíveis no SDK:
 ------------------------------------
 Nome            |   Desc            |   Exemplo
+setLogType      |   tipo de log     |   price_change, stock_change, order_history
 setKey          |   set access key  |   ASDASDASDASD
 setSecret       |   set secret key  |   DSADHASUDHAU
 setWellExecuted |   sucesso na exec |   true | false
-setLevel        |   tipo de log     |   history | log
+setLevel        |   nível de log    |   history | log
 setEnvironment  |   tipo de env     |   local | dev | prod
 setApp          |   aplicação       |   vendala | simplifique | lambdared | pickingpack | questions
 setUid          |   coluna ref      |   universal_id (primary key)
@@ -97,6 +98,7 @@ vendor/bin/phpunit src/tests/setupTest.php
 
 ```javascript
 {
+  "logType" : "stock_change",
   "messages": [
     "começou a execução do processo de estoque",
     "estoque antigo: 123",
