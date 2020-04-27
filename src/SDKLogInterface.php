@@ -5,6 +5,13 @@ namespace Vendala\Logs;
 interface SDKLogInterface
 {
     /**
+     * Seta o tipo de log
+     * @param string $lType
+     * @return void
+     */
+    public function setLogType($lType): void;
+    
+    /**
      * Seta a access key da aws
      * @param string $key
      * @return void

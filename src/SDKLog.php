@@ -16,6 +16,12 @@ final class SDKLog implements SDKLogInterface
     private $streamName = ['log' => 'vendala-logs', 'history' => 'vendala-history'];
 
     /**
+     * tipo do log (alteraçao de preço, alteraçao de estoque, historico de pedidos)
+     * @var string
+     */
+    private $logType;
+
+    /**
      * determina se está mockado ou não para testes
      * @var boolean
      */
@@ -62,6 +68,16 @@ final class SDKLog implements SDKLogInterface
         $this->payload->messages = [];
         $this->payload->methods = [];
         $this->payload->props = [];
+    }
+
+    /**
+     * Seta o tipo de log
+     * @param string $lType
+     * @return void
+     */
+    public function setLogType($lType): void
+    {
+        $this->logType = $lType;
     }
 
     /**
@@ -244,6 +260,7 @@ final class SDKLog implements SDKLogInterface
      */
     public function sendLog(): bool
     {
+        $this->validateSendLog($this->logType, 'log type');
         $this->validateSendLog($this->key, 'aws access key');
         $this->validateSendLog($this->secret, 'aws secret key');
         $this->validateSendLog($this->payload->env, 'env');

@@ -26,7 +26,7 @@ class SetupTest extends TestCase
 
         $log->setKey('adsasd');
         $log->setSecret('bbbb');
-
+        $log->setLogType('price_change');
         $log->setLevel('log');
         $log->setEnvironment('local');
         $log->setApp('simplifique');
@@ -63,6 +63,7 @@ class SetupTest extends TestCase
 
         #$log->setLevel('log');
         #$log->setEnvironment('local');
+        $log->setLogType('price_change');
         $log->setApp('simplifique');
         $log->setUid('3333');
         $log->setTable('skus');
