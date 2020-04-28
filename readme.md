@@ -64,6 +64,7 @@ Funções disponíveis no SDK:
 ------------------------------------
 Nome            |   Desc            |   Exemplo
 setLogType      |   tipo de log     |   price_change, stock_change, order_history
+setAction       |   tipo da ação    |   manual,automatic,callback,job
 setKey          |   set access key  |   ASDASDASDASD
 setSecret       |   set secret key  |   DSADHASUDHAU
 setWellExecuted |   sucesso na exec |   true | false
