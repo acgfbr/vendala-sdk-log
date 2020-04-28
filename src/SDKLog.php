@@ -10,6 +10,12 @@ use Throwable;
 final class SDKLog implements SDKLogInterface
 {
     /**
+     * determina quem fez a açao (manual, callback, job)
+     * @var string
+     */
+    private $action;
+
+    /**
      * nome da stream no kinesis firehose
      * @var array
      */
@@ -71,13 +77,23 @@ final class SDKLog implements SDKLogInterface
     }
 
     /**
+     * Seta a action
+     * @param string $lType
+     * @return void
+     */
+    public function setAction($action): void
+    {
+        $this->payload->action = $action;
+    }
+
+    /**
      * Seta o tipo de log
      * @param string $lType
      * @return void
      */
     public function setLogType($lType): void
     {
-        $this->logType = $lType;
+        $this->payload->logType = $lType;
     }
 
     /**
