@@ -276,7 +276,7 @@ final class SDKLog implements SDKLogInterface
      */
     public function sendLog(): bool
     {
-        $this->validateSendLog($this->logType, 'log type');
+        $this->validateSendLog($this->payload->logType, 'log type');
         $this->validateSendLog($this->key, 'aws access key');
         $this->validateSendLog($this->secret, 'aws secret key');
         $this->validateSendLog($this->payload->env, 'env');
