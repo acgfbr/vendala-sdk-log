@@ -302,7 +302,7 @@ final class SDKLog implements SDKLogInterface
             );
 
             $firehoseClient->putRecord([
-                'DeliveryStreamName' => $this->streamName[$this->level],
+                'DeliveryStreamName' => $this->streamName[$this->payload->level],
                 'Record' => [
                     'Data' => json_encode($this->payload),
                 ],
