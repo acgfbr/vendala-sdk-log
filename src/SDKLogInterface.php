@@ -5,6 +5,13 @@ namespace Vendala\Logs;
 interface SDKLogInterface
 {
     /**
+     * Seta a action
+     * @param string $lType
+     * @return void
+     */
+    public function setAction($action): void;
+    
+    /**
      * Seta o tipo de log
      * @param string $lType
      * @return void
@@ -31,7 +38,7 @@ interface SDKLogInterface
      * @param bool $val
      * @return void
      */
-    public function setWellExecuted(int $id): void;
+    public function setWellExecuted($id): void;
 
     /**
      * Seta o tipo de log ( history | log )

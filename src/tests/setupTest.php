@@ -26,6 +26,7 @@ class SetupTest extends TestCase
 
         $log->setKey('adsasd');
         $log->setSecret('bbbb');
+        $log->setAction('manual');
         $log->setLogType('price_change');
         $log->setLevel('log');
         $log->setEnvironment('local');

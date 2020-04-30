@@ -10,6 +10,12 @@ use Throwable;
 final class SDKLog implements SDKLogInterface
 {
     /**
+     * determina quem fez a açao (manual, callback, job)
+     * @var string
+     */
+    private $action;
+
+    /**
      * nome da stream no kinesis firehose
      * @var array
      */
@@ -71,13 +77,23 @@ final class SDKLog implements SDKLogInterface
     }
 
     /**
+     * Seta a action
+     * @param string $lType
+     * @return void
+     */
+    public function setAction($action): void
+    {
+        $this->payload->action = $action;
+    }
+
+    /**
      * Seta o tipo de log
      * @param string $lType
      * @return void
      */
     public function setLogType($lType): void
     {
-        $this->logType = $lType;
+        $this->payload->logType = $lType;
     }
 
     /**
@@ -260,7 +276,7 @@ final class SDKLog implements SDKLogInterface
      */
     public function sendLog(): bool
     {
-        $this->validateSendLog($this->logType, 'log type');
+        $this->validateSendLog($this->payload->logType, 'log type');
         $this->validateSendLog($this->key, 'aws access key');
         $this->validateSendLog($this->secret, 'aws secret key');
         $this->validateSendLog($this->payload->env, 'env');
@@ -285,8 +301,10 @@ final class SDKLog implements SDKLogInterface
                 ]
             );
 
+            $this->payload->created_at = date('Y-m-h H:i:s');
+
             $firehoseClient->putRecord([
-                'DeliveryStreamName' => $this->streamName[$this->level],
+                'DeliveryStreamName' => $this->streamName[$this->payload->level],
                 'Record' => [
                     'Data' => json_encode($this->payload),
                 ],
