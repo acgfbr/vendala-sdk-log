@@ -47,6 +47,8 @@ class SdkLogComponent extends Object
   {
     if ($mock) {
       $this->mocked = true;
+    }else{
+      $this->mocked=false;
     }
 
     $this->payload = new stdClass;
@@ -268,11 +270,12 @@ class SdkLogComponent extends Object
         'index' => $this->streamName[$this->payload->level]
       );
 
-      $payload = json_encode($this->payload);
+      $payload = json_encode($payload);
+
       curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
       curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
       curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-      curl_exec($ch);
+      $response = curl_exec($ch);
       curl_close($ch);
 
       return true;

@@ -265,7 +265,7 @@ class SDKLog implements SDKLogInterface
                 'index' => $this->streamName[$this->payload->level]
             ];
 
-            $payload = json_encode($this->payload);
+            $payload = json_encode($payload);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
             curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
