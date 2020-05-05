@@ -5,33 +5,25 @@ namespace Vendala\Logs;
 interface SDKLogInterface
 {
     /**
+     * Seta a url do api gateway
+     * @param string $url
+     * @return void
+     */
+    public function setUrl($url): void;
+
+    /**
      * Seta a action
      * @param string $lType
      * @return void
      */
     public function setAction($action): void;
-    
+
     /**
      * Seta o tipo de log
      * @param string $lType
      * @return void
      */
     public function setLogType($lType): void;
-    
-    /**
-     * Seta a access key da aws
-     * @param string $key
-     * @return void
-     */
-    public function setKey($key): void;
-
-    /**
-     * Seta a secret key da aws
-     * @param string $secret
-     * @return void
-     */
-    public function setSecret($secret): void;
-
 
     /**
      * Seta se a execução do processo foi sucesso ou erro ( true | false )
