@@ -303,12 +303,13 @@ final class SDKLog implements SDKLogInterface
 
             $this->payload->created_at = date('Y-m-h H:i:s');
 
-            $firehoseClient->putRecord([
+            $res = $firehoseClient->putRecord([
                 'DeliveryStreamName' => $this->streamName[$this->payload->level],
                 'Record' => [
                     'Data' => json_encode($this->payload),
                 ],
             ]);
+            //print_r($res);
             return true;
         } catch (Exception $ex) {
             print_r($ex->getTraceAsString());
