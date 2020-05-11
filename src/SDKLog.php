@@ -2,14 +2,13 @@
 
 namespace Vendala\Logs;
 
+use Aws\Firehose\FirehoseClient;
 use Exception;
 use stdClass;
 use Throwable;
 
-class SDKLog implements SDKLogInterface
+final class SDKLog implements SDKLogInterface
 {
-    private $url;
-
     /**
      * determina quem fez a açao (manual, callback, job)
      * @var string
@@ -35,6 +34,30 @@ class SDKLog implements SDKLogInterface
     private $mocked;
 
     /**
+     * access key da aws
+     * @var string
+     */
+    private $key;
+
+    /**
+     * secret key da aws
+     * @var string
+     */
+    private $secret;
+
+    /**
+     * versão da api da aws
+     * @var string
+     */
+    private $version = '2015-08-04';
+
+    /**
+     * região da aws
+     * @var string
+     */
+    private $region = 'us-east-1';
+
+    /**
      * json final enviado ao kinesis
      * @var json
      */
@@ -51,16 +74,6 @@ class SDKLog implements SDKLogInterface
         $this->payload->messages = [];
         $this->payload->methods = [];
         $this->payload->props = [];
-    }
-
-    /**
-     * Seta a url do api gateway
-     * @param string $url
-     * @return void
-     */
-    public function setUrl($url): void
-    {
-        $this->url = $url;
     }
 
     /**
@@ -81,6 +94,26 @@ class SDKLog implements SDKLogInterface
     public function setLogType($lType): void
     {
         $this->payload->logType = $lType;
+    }
+
+    /**
+     * Seta a access key da aws
+     * @param string $key
+     * @return void
+     */
+    public function setKey($key): void
+    {
+        $this->key = $key;
+    }
+
+    /**
+     * Seta a secret key da aws
+     * @param string $secret
+     * @return void
+     */
+    public function setSecret($secret): void
+    {
+        $this->secret = $secret;
     }
 
     /**
@@ -244,7 +277,8 @@ class SDKLog implements SDKLogInterface
     public function sendLog(): bool
     {
         $this->validateSendLog($this->payload->logType, 'log type');
-        $this->validateSendLog($this->url, 'url secret key');
+        $this->validateSendLog($this->key, 'aws access key');
+        $this->validateSendLog($this->secret, 'aws secret key');
         $this->validateSendLog($this->payload->env, 'env');
         $this->validateSendLog($this->payload->level, 'level');
 
@@ -255,23 +289,26 @@ class SDKLog implements SDKLogInterface
         }
 
         try {
+            $firehoseClient = FirehoseClient::factory(
+                [
+                    'credentials' => array(
+                        'key'    => $this->key,
+                        'secret' => $this->secret,
+
+                    ),
+                    'version' => $this->version,
+                    'region' => $this->region
+                ]
+            );
 
             $this->payload->created_at = date('Y-m-h H:i:s');
 
-            $ch = curl_init($this->url . '/logs');
-
-            $payload = [
-                'payload' => json_encode($this->payload),
-                'index' => $this->streamName[$this->payload->level]
-            ];
-
-            $payload = json_encode($payload);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
-            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_exec($ch);
-            curl_close($ch);
-
+            $firehoseClient->putRecord([
+                'DeliveryStreamName' => $this->streamName[$this->payload->level],
+                'Record' => [
+                    'Data' => json_encode($this->payload),
+                ],
+            ]);
             return true;
         } catch (Exception $ex) {
             print_r($ex->getTraceAsString());

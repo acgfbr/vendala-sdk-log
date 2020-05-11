@@ -8,6 +8,9 @@
       "role": "Senior Software Engineer"
     }
   ],
+  "require": {
+    "aws/aws-sdk-php": "3.134"
+  },
   "license": "MIT",
   "autoload": {
     "psr-4": {
