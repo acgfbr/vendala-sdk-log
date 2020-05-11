@@ -47,8 +47,8 @@ class SdkLogComponent extends Object
   {
     if ($mock) {
       $this->mocked = true;
-    }else{
-      $this->mocked=false;
+    } else {
+      $this->mocked = false;
     }
 
     $this->payload = new stdClass;
@@ -170,7 +170,7 @@ class SdkLogComponent extends Object
   {
     if (is_array($message)) {
       foreach ($message as $item) {
-        $this->addMessage($item,$args);
+        $this->addMessage($item, $args);
       }
       return $this;
     }
@@ -180,22 +180,19 @@ class SdkLogComponent extends Object
     return $this;
   }
 
-  
+
   /**
    * Adiciona trace de métodos do log
    * @param string $name
    * @param array $arguments
-   * @param array $logs
    * @return $this
    */
-  public function addMethod($name, $arguments = array(), $logs = array())
+  public function addMethod($name, $arguments = array())
   {
     $this->payload->methods[$name] = array(
-      'arguments' => $arguments,
-      'logs' => $logs
+      'arguments' => json_encode($arguments)
     );
     return $this;
-    
   }
 
 
@@ -226,21 +223,21 @@ class SdkLogComponent extends Object
    */
   public function addException($e)
   {
-      $struct = array(
-        'file' => $e->getFile(),
-        'code' => $e->getCode(),
-        'message' => $e->getMessage()
-      );
+    $struct = array(
+      'file' => $e->getFile(),
+      'code' => $e->getCode(),
+      'message' => $e->getMessage()
+    );
 
-      $this->addProp('exception', $struct);
+    $this->addProp('exception', $struct);
   }
 
   public function validateSendLog($k, $st)
-    {
-        if (!isset($k)) {
-            throw new Exception($st . ' not configured.');
-        }
+  {
+    if (!isset($k)) {
+      throw new Exception($st . ' not configured.');
     }
+  }
 
   /**
    * Envia ao firehose os dados pré inseridos
@@ -285,5 +282,4 @@ class SdkLogComponent extends Object
 
     return false;
   }
-
 }

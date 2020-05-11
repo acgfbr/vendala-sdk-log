@@ -249,11 +249,10 @@ final class SDKLog implements SDKLogInterface
      * @param array $logs
      * @return $this
      */
-    public function addMethod($name, $arguments = [], $logs = []): SDKLog
+    public function addMethod($name, $arguments = []): SDKLog
     {
         $this->payload->methods[$name] = [
-            'arguments' => $arguments,
-            'logs' => $logs
+            'arguments' => json_encode($arguments)
         ];
         return $this;
     }

@@ -112,7 +112,7 @@ interface SDKLogInterface
      * @param array $logs
      * @return $this
      */
-    public function addMethod($name, $arguments = [], $logs = []): SDKLog;
+    public function addMethod($name, $arguments = []): SDKLog;
 
     /**
      * Valida os dados mínimos pra enviar ao firehose
