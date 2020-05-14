@@ -234,7 +234,7 @@ final class SDKLog implements SDKLogInterface
     {
         if (is_array($prop) && !$group) {
             foreach ($prop as $itemProp => $itemValue) {
-                $this->addProp($itemProp, $itemValue);
+                $this->addProp($itemProp, json_encode($itemValue));
             }
             return $this;
         }
