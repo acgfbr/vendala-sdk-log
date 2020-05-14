@@ -300,7 +300,7 @@ final class SDKLog implements SDKLogInterface
                 ]
             );
 
-            $this->payload->created_at = date('Y-m-h H:i:s');
+            $this->payload->created_at = date('Y-m-d H:i:s');
 
             $res = $firehoseClient->putRecord([
                 'DeliveryStreamName' => $this->streamName[$this->payload->level],
