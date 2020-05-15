@@ -216,11 +216,28 @@ final class SDKLog implements SDKLogInterface
             $struct = [
                 'file' => $e->getFile(),
                 'code' => $e->getCode(),
-                'message' => $e->getMessage()
+                'message' => $e->getMessage(),
             ];
 
             $this->addProp('exception', $struct);
         }
+    }
+
+    public function array_depth(array $array)
+    {
+        $max_depth = 1;
+
+        foreach ($array as $value) {
+            if (is_array($value)) {
+                $depth = $this->array_depth($value) + 1;
+
+                if ($depth > $max_depth) {
+                    $max_depth = $depth;
+                }
+            }
+        }
+
+        return $max_depth;
     }
 
     /**
@@ -234,11 +251,17 @@ final class SDKLog implements SDKLogInterface
     {
         if (is_array($prop) && !$group) {
             foreach ($prop as $itemProp => $itemValue) {
-                $this->addProp($itemProp, json_encode($itemValue));
+                $this->addProp($itemProp, $itemValue);
             }
             return $this;
         }
-        $this->payload->props[$prop] = $value;
+        if (is_array($value) && $this->array_depth($value) > 2) {
+            $this->payload->props[$prop] = json_encode($value);
+
+        } else {
+            $this->payload->props[$prop] = $value;
+        }
+
         return $this;
     }
 
@@ -252,7 +275,7 @@ final class SDKLog implements SDKLogInterface
     public function addMethod($name, $arguments = []): SDKLog
     {
         $this->payload->methods[$name] = [
-            'arguments' => json_encode($arguments)
+            'arguments' => json_encode($arguments),
         ];
         return $this;
     }
@@ -283,7 +306,7 @@ final class SDKLog implements SDKLogInterface
 
         // se estiver mockado não envia pra aws
         if ($this->mocked) {
-            #print_r(json_encode($this->payload));
+            print_r(json_encode($this->payload));
             return true;
         }
 
@@ -291,12 +314,12 @@ final class SDKLog implements SDKLogInterface
             $firehoseClient = FirehoseClient::factory(
                 [
                     'credentials' => array(
-                        'key'    => $this->key,
+                        'key' => $this->key,
                         'secret' => $this->secret,
 
                     ),
                     'version' => $this->version,
-                    'region' => $this->region
+                    'region' => $this->region,
                 ]
             );
 
