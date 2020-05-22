@@ -229,7 +229,7 @@ class SdkLogComponent extends Object
         $this->payload->props[$prop] = $value;
         }*/
 
-        $this->payload->props[$prop] = $value;
+        $this->payload->props[$prop] = json_encode($value);
 
         return $this;
     }
