@@ -222,7 +222,7 @@ class SdkLogComponent extends Object
             }
             return $this;
         }
-        if (is_array($value) && $this->array_depth($value) > 2) {
+        if (is_array($value) && $this->array_depth($value) > 1) {
             $this->payload->props[$prop] = json_encode($value);
 
         } else {
@@ -262,7 +262,7 @@ class SdkLogComponent extends Object
     public function sendLog()
     {
         $this->validateSendLog($this->payload->logType, 'log type');
-        $this->validateSendLog($this->url, 'url secret key');
+        $this->validateSendLog($this->url, 'url');
         $this->validateSendLog($this->payload->env, 'env');
         $this->validateSendLog($this->payload->level, 'level');
 

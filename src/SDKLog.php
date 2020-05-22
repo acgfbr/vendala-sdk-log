@@ -255,7 +255,7 @@ final class SDKLog implements SDKLogInterface
             }
             return $this;
         }
-        if (is_array($value) && $this->array_depth($value) > 2) {
+        if (is_array($value) && $this->array_depth($value) > 1) {
             $this->payload->props[$prop] = json_encode($value);
 
         } else {
