@@ -255,12 +255,15 @@ final class SDKLog implements SDKLogInterface
             }
             return $this;
         }
-        if (is_array($value) && $this->array_depth($value) > 1) {
-            $this->payload->props[$prop] = json_encode($value);
+
+        $this->payload->props[$prop] = json_encode($value);
+
+        /*if (is_array($value) && $this->array_depth($value) > 1) {
+        $this->payload->props[$prop] = json_encode($value);
 
         } else {
-            $this->payload->props[$prop] = $value;
-        }
+        $this->payload->props[$prop] = $value;
+        }*/
 
         return $this;
     }
