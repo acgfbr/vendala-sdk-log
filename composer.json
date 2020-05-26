@@ -9,7 +9,7 @@
     }
   ],
   "require": {
-    "aws/aws-sdk-php": "3.134"
+    "aws/aws-sdk-php": "^3.138"
   },
   "license": "MIT",
   "autoload": {
