@@ -302,8 +302,8 @@ final class SDKLog implements SDKLogInterface
     public function sendLog(): bool
     {
         $this->validateSendLog($this->payload->logType, 'log type');
-        $this->validateSendLog($this->key, 'aws access key');
-        $this->validateSendLog($this->secret, 'aws secret key');
+        #$this->validateSendLog($this->key, 'aws access key');
+        #$this->validateSendLog($this->secret, 'aws secret key');
         $this->validateSendLog($this->payload->env, 'env');
         $this->validateSendLog($this->payload->level, 'level');
 
@@ -314,17 +314,25 @@ final class SDKLog implements SDKLogInterface
         }
 
         try {
-            $firehoseClient = FirehoseClient::factory(
-                [
-                    'credentials' => array(
-                        'key' => $this->key,
-                        'secret' => $this->secret,
+            $firehoseClient = null;
 
-                    ),
-                    'version' => $this->version,
-                    'region' => $this->region,
-                ]
-            );
+            if ($this->key && $this->secret) {
+                $firehoseClient = FirehoseClient::factory(
+                    [
+                        'credentials' => array(
+                            'key' => $this->key,
+                            'secret' => $this->secret,
+
+                        ),
+                        'version' => $this->version,
+                        'region' => $this->region,
+                    ]
+                );
+            } else {
+                $firehoseClient = new FirehoseClient(
+                    ['version' => $this->version,
+                        'region' => $this->region]);
+            }
 
             $this->payload->created_at = date('Y-m-d H:i:s');
 
