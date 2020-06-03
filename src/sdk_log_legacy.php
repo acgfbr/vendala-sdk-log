@@ -14,22 +14,10 @@ class SdkLogComponent extends Object
     private $url;
 
     /**
-     * determina quem fez a açao (manual, callback, job)
-     * @var string
-     */
-    private $action;
-
-    /**
      * nome da stream no kinesis firehose
      * @var array
      */
     private $streamName = array('log' => 'vendala-logs', 'history' => 'vendala-history');
-
-    /**
-     * tipo do log (alteraçao de preço, alteraçao de estoque, historico de pedidos)
-     * @var string
-     */
-    private $logType;
 
     /**
      * determina se está mockado ou não para testes
@@ -96,6 +84,16 @@ class SdkLogComponent extends Object
     public function setWellExecuted($val)
     {
         $this->payload->wellExecuted = $val;
+    }
+
+     /**
+     * Retorna se execução do processo foi marcada com sucesso ou erro ( true | false )
+     * @param bool $val
+     * @return void
+     */
+    public function getWellExecuted()
+    {
+        return $this->payload->wellExecuted;
     }
 
     /**

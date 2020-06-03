@@ -118,6 +118,16 @@ final class SDKLog implements SDKLogInterface
     }
 
     /**
+     * Retorna se execução do processo foi marcada com sucesso ou erro ( true | false )
+     * @param bool $val
+     * @return void
+     */
+    public function getWellExecuted(): bool
+    {
+        return $this->payload->wellExecuted;
+    }
+
+    /**
      * Seta o tipo de log ( history | log )
      * @param string $val
      * @return void
