@@ -3,29 +3,20 @@
 namespace Vendala\Logs;
 
 use Aws\Firehose\FirehoseClient;
+use DateTime;
+use DateTimeZone;
 use Exception;
 use stdClass;
 use Throwable;
 
 final class SDKLog implements SDKLogInterface
 {
-    /**
-     * determina quem fez a açao (manual, callback, job)
-     * @var string
-     */
-    private $action;
-
+    
     /**
      * nome da stream no kinesis firehose
      * @var array
      */
     private $streamName = ['log' => 'vendala-logs', 'history' => 'vendala-history'];
-
-    /**
-     * tipo do log (alteraçao de preço, alteraçao de estoque, historico de pedidos)
-     * @var string
-     */
-    private $logType;
 
     /**
      * determina se está mockado ou não para testes
@@ -334,7 +325,8 @@ final class SDKLog implements SDKLogInterface
                         'region' => $this->region]);
             }
 
-            $this->payload->created_at = date('Y-m-d H:i:s');
+            $date = new DateTime("now", new DateTimeZone('America/Sao_Paulo') );
+            $this->payload->created_at = $date->format('Y-m-d H:i:s');
 
             $res = $firehoseClient->putRecord([
                 'DeliveryStreamName' => $this->streamName[$this->payload->level],
