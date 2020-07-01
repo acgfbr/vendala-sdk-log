@@ -37,8 +37,12 @@ class SdkLogComponent extends Object
      * @return void
      */
     public function isJsonValid($str){
-        $json = json_decode($str);
-        return $json && $str != $json;
+        try {
+            $json = json_decode($str);
+            return $json && $str != $json;
+        } catch (Exception $e) {
+            return false;
+        }
     }
 
     public function initialize($mock = null)
