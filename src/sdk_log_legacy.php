@@ -31,6 +31,16 @@ class SdkLogComponent extends Object
      */
     private $payload;
 
+    /**
+     * Verifica se um json é valido
+     * @param string $str
+     * @return void
+     */
+    public function isJsonValid($str){
+        $json = json_decode($str);
+        return $json && $str != $json;
+    }
+
     public function initialize($mock = null)
     {
         if ($mock) {
@@ -220,14 +230,13 @@ class SdkLogComponent extends Object
             }
             return $this;
         }
-        /*if (is_array($value) && $this->array_depth($value) > 1) {
-        $this->payload->props[$prop] = json_encode($value);
+        
 
-        } else {
-        $this->payload->props[$prop] = $value;
-        }*/
-
-        $this->payload->props[$prop] = json_encode($value);
+        if($this->isJsonValid($value)){
+            $this->payload->props[$prop] = $value;
+        }else{
+            $this->payload->props[$prop] = json_encode($value);    
+        }
 
         return $this;
     }

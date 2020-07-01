@@ -68,6 +68,16 @@ final class SDKLog implements SDKLogInterface
     }
 
     /**
+     * Verifica se um json é valido
+     * @param string $str
+     * @return void
+     */
+    public function isJsonValid($str){
+        $json = json_decode($str);
+        return $json && $str != $json;
+    }
+
+    /**
      * Seta a action
      * @param string $lType
      * @return void
@@ -257,14 +267,11 @@ final class SDKLog implements SDKLogInterface
             return $this;
         }
 
-        $this->payload->props[$prop] = json_encode($value);
-
-        /*if (is_array($value) && $this->array_depth($value) > 1) {
-        $this->payload->props[$prop] = json_encode($value);
-
-        } else {
-        $this->payload->props[$prop] = $value;
-        }*/
+        if($this->isJsonValid($value)){
+            $this->payload->props[$prop] = $value;
+        }else{
+            $this->payload->props[$prop] = json_encode($value);    
+        }
 
         return $this;
     }

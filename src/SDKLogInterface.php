@@ -5,6 +5,13 @@ namespace Vendala\Logs;
 interface SDKLogInterface
 {
     /**
+     * Verifica se um json é valido
+     * @param string $str
+     * @return void
+     */
+    public function isJsonValid($str);
+
+    /**
      * Seta a action
      * @param string $lType
      * @return void
