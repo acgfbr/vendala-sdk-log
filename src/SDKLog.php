@@ -274,7 +274,7 @@ final class SDKLog implements SDKLogInterface
         if($this->isJsonValid($value)){
             $this->payload->props[$prop] = $value;
         }else{
-            $this->payload->props[$prop] = json_encode($value);    
+            $this->payload->props[$prop] = json_encode($value, JSON_UNESCAPED_UNICODE);    
         }
 
         return $this;
@@ -290,7 +290,7 @@ final class SDKLog implements SDKLogInterface
     public function addMethod($name, $arguments = []): SDKLog
     {
         $this->payload->methods[$name] = [
-            'arguments' => json_encode($arguments),
+            'arguments' => json_encode($arguments, JSON_UNESCAPED_UNICODE),
         ];
         return $this;
     }
@@ -321,7 +321,7 @@ final class SDKLog implements SDKLogInterface
 
         // se estiver mockado não envia pra aws
         if ($this->mocked) {
-            print_r(json_encode($this->payload));
+            print_r(json_encode($this->payload, JSON_UNESCAPED_UNICODE));
             return true;
         }
 
@@ -352,7 +352,7 @@ final class SDKLog implements SDKLogInterface
             $res = $firehoseClient->putRecord([
                 'DeliveryStreamName' => $this->streamName[$this->payload->level],
                 'Record' => [
-                    'Data' => json_encode($this->payload),
+                    'Data' => json_encode($this->payload, JSON_UNESCAPED_UNICODE),
                 ],
             ]);
             //print_r($res);
