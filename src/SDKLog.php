@@ -219,6 +219,10 @@ final class SDKLog implements SDKLogInterface
             return $this;
         }
 
+        if(is_object($message)){
+            $message = json_encode($message,JSON_UNESCAPED_UNICODE);
+        }
+
         $this->payload->messages[] = isset($args) ? sprintf($message, ...$args) : $message;
 
         return $this;

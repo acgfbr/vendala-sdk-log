@@ -13,7 +13,7 @@ $payload = [
 
 ];
 
-$log = (new Vendala\Logs\SDKLog());
+$log = (new Vendala\Logs\SDKLog(true));
 
 $log->setKey('hdfgh');
 $log->setSecret('dsgdfg');
@@ -25,6 +25,9 @@ $log->setUid('3333');
 $log->setTable('skus');
 $log->setDatabase('simplifique');
 $log->setLogType('sample');
+$a = new stdClass;
+$a->w = 't';
+$log->addMessage($a);
 $log->addMessage('começou a execução do processo de estoque')
   ->addMessage('estoque antigo: ' . $payload['old'])
   ->addMessage('cliente alterou estoque para: ' . $payload['new'])

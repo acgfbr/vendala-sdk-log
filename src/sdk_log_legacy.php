@@ -187,6 +187,10 @@ class SdkLogComponent extends Object
             return $this;
         }
 
+        if(is_object($message)){
+            $message = $this->raw_json_encode($message);
+        }
+
         $this->payload->messages[] = isset($args) ? sprintf($message, $args) : $message;
 
         return $this;
