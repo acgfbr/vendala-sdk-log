@@ -73,6 +73,10 @@ final class SDKLog implements SDKLogInterface
      * @return void
      */
     public function isJsonValid($str){
+        if(!is_string($str)){
+            return false;
+        }
+
         try {
             $json = json_decode($str);
             return $json && $str != $json;
@@ -274,7 +278,12 @@ final class SDKLog implements SDKLogInterface
         if($this->isJsonValid($value)){
             $this->payload->props[$prop] = $value;
         }else{
-            $this->payload->props[$prop] = json_encode($value, JSON_UNESCAPED_UNICODE);    
+            if(!is_object($value) && !is_array($value)){
+                $this->payload->props[$prop] = strval($value);
+            }else{
+                $this->payload->props[$prop] = json_encode($value, JSON_UNESCAPED_UNICODE);    
+            }
+            
         }
 
         return $this;

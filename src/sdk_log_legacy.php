@@ -37,6 +37,9 @@ class SdkLogComponent extends Object
      * @return void
      */
     public function isJsonValid($str){
+        if(!is_string($str)){
+            return false;
+        }
         try {
             $json = json_decode($str);
             return $json && $str != $json;
@@ -198,7 +201,7 @@ class SdkLogComponent extends Object
     public function addMethod($name, $arguments = array())
     {
         $this->payload->methods[$name] = array(
-            'arguments' => json_encode($arguments),
+            'arguments' => $this->raw_json_encode($arguments),
         );
         return $this;
     }
@@ -239,7 +242,12 @@ class SdkLogComponent extends Object
         if($this->isJsonValid($value)){
             $this->payload->props[$prop] = $value;
         }else{
-            $this->payload->props[$prop] = json_encode($value);    
+            if(!is_object($value) && !is_array($value)){
+                $this->payload->props[$prop] = strval($value);
+            }else{
+                $this->payload->props[$prop] = $this->raw_json_encode($value);    
+            }
+            
         }
 
         return $this;
@@ -268,6 +276,21 @@ class SdkLogComponent extends Object
         }
     }
 
+    function raw_json_encode($input, $flags = 0) {
+        $fails = implode('|', array_filter(array(
+            '\\\\',
+            $flags & JSON_HEX_TAG ? 'u003[CE]' : '',
+            $flags & JSON_HEX_AMP ? 'u0026' : '',
+            $flags & JSON_HEX_APOS ? 'u0027' : '',
+            $flags & JSON_HEX_QUOT ? 'u0022' : '',
+        )));
+        $pattern = "/\\\\(?:(?:$fails)(*SKIP)(*FAIL)|u([0-9a-fA-F]{4}))/";
+        $callback = function ($m) {
+            return html_entity_decode("&#x$m[1];", ENT_QUOTES, 'UTF-8');
+        };
+        return preg_replace_callback($pattern, $callback, json_encode($input, $flags));
+    }
+
     /**
      * Envia ao firehose os dados pré inseridos
      * @return void
@@ -281,7 +304,7 @@ class SdkLogComponent extends Object
 
         // se estiver mockado não envia pra aws
         if ($this->mocked) {
-            print_r(json_encode($this->payload));
+            print_r($this->raw_json_encode($this->payload));
             return true;
         }
 
@@ -292,17 +315,19 @@ class SdkLogComponent extends Object
             $ch = curl_init($this->url . '/logs');
 
             $payload = array(
-                'payload' => json_encode($this->payload),
+                'payload' => $this->raw_json_encode($this->payload),
                 'index' => $this->streamName[$this->payload->level],
             );
 
-            $payload = json_encode($payload);
+            $payload = $this->raw_json_encode($payload);
 
             curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
             curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             $response = curl_exec($ch);
             curl_close($ch);
+
+            #var_dump($response);
 
             return true;
         } catch (Exception $ex) {

@@ -6,7 +6,7 @@ $payload = [
   'sku_id' => '123123423',
   'sku' => 'TESTESDK',
   'shop_name' => 'testeantonio',
-  'enterprise_id' => 1,
+  'enterprise_id' => ['a' => 'á á á á á á'],
   'old' => '123',
   'new' => '122',
 
@@ -15,8 +15,8 @@ $payload = [
 
 $log = (new Vendala\Logs\SDKLog());
 
-$log->setKey('abc');
-$log->setSecret('def');
+$log->setKey('hdfgh');
+$log->setSecret('dsgdfg');
 
 $log->setLevel('log');
 $log->setEnvironment('local');
@@ -35,5 +35,5 @@ $log->addMessage('começou a execução do processo de estoque')
 
 $log->setWellExecuted(true);
 
-
-print_r($log->sendLog());
+$log->sendLog();
+#print_r();
