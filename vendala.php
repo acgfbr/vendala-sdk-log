@@ -15,7 +15,7 @@ $payload = array(
 );
 
 $log = new SdkLogComponent();
-$log->initialize();
+$log->initialize(true);
 $log->setUrl('asdasdasd');
 $log->setAction('manual');
 $log->setLogType('VRAU');

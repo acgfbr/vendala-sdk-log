@@ -1,5 +1,30 @@
 <?php
-
+if (! function_exists('array_column')) {
+    function array_column(array $input, $columnKey, $indexKey = null) {
+        $array = array();
+        foreach ($input as $value) {
+            if ( !array_key_exists($columnKey, $value)) {
+                trigger_error("Key \"$columnKey\" does not exist in array");
+                return false;
+            }
+            if (is_null($indexKey)) {
+                $array[] = $value[$columnKey];
+            }
+            else {
+                if ( !array_key_exists($indexKey, $value)) {
+                    trigger_error("Key \"$indexKey\" does not exist in array");
+                    return false;
+                }
+                if ( ! is_scalar($value[$indexKey])) {
+                    trigger_error("Key \"$indexKey\" does not contain scalar value");
+                    return false;
+                }
+                $array[$value[$indexKey]] = $value[$columnKey];
+            }
+        }
+        return $array;
+    }
+}
 class SdkLogComponent extends Object
 {
     /**
@@ -305,6 +330,12 @@ class SdkLogComponent extends Object
         $this->validateSendLog($this->url, 'url');
         $this->validateSendLog($this->payload->env, 'env');
         $this->validateSendLog($this->payload->level, 'level');
+
+        $key = array_search(__FUNCTION__, array_column(debug_backtrace(), 'function'));
+        $back = debug_backtrace();
+        $fileCalled = $back[$key]['file'];
+
+        $this->addProp('file',$fileCalled);
 
         // se estiver mockado não envia pra aws
         if ($this->mocked) {

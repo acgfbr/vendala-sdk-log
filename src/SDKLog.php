@@ -332,11 +332,18 @@ final class SDKLog implements SDKLogInterface
         $this->validateSendLog($this->payload->env, 'env');
         $this->validateSendLog($this->payload->level, 'level');
 
+
+        $key = array_search(__FUNCTION__, array_column(debug_backtrace(), 'function'));
+        $fileCalled = (debug_backtrace()[$key]['file']);
+
+        $this->addProp('file',$fileCalled);
+        
         // se estiver mockado não envia pra aws
         if ($this->mocked) {
             print_r(json_encode($this->payload, JSON_UNESCAPED_UNICODE));
             return true;
         }
+
 
         try {
             $firehoseClient = null;
