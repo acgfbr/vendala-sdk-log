@@ -8,6 +8,7 @@
       "role": "Senior Software Engineer"
     }
   ],
+  "minimum-stability": "stable",
   "require": {
     "aws/aws-sdk-php": "^3.138"
   },
